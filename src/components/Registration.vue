@@ -7,46 +7,56 @@
             </li> 
         </ul>
         <h1>Register Form</h1>
-        <form @submit="register"> 
+        <form @submit="register" method="post"> 
             <label>FirstName : </label>
-            <input type="text" name="firstName" placeholder="Enter First Name"><br>
+            <input type="text" name="firstName" v-model="reg.firstName" placeholder="Enter First Name"><br>
             <label>LastName : </label>
-            <input type="text" name="lastName" placeholder="Enter Last Name"><br>
+            <input type="text" name="lastName"  v-model="reg.lastName" placeholder="Enter Last Name"><br>
             <label>Email : </label>
-            <input type="text" name="email" placeholder="Enter email Name"><br>
+            <input type="text" name="email" v-model="reg.email" placeholder="Enter email Name"><br>
             <label>Password : </label>
-            <input type="text" name="password" placeholder="Enter password Name"><br>
+            <input type="password" name="password" v-model="reg.password" placeholder="Enter password Name"><br>
             <label>Phone : </label>
-            <input type="text" name="phone" placeholder="Enter phone Name"><br>
+            <input type="text" name="phone" v-model="reg.phone" placeholder="Enter phone Name"><br>
             <button type="submit">Register</button>
         </form>
     </div>
 </template>
 <script>
+import Vue from 'vue';
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+Vue.use(VueAxios,axios)
 export default{
-    name:"login",
-    data(){
+    name:"Register",
+    data()
+    {
         return { 
             error:[],
-            firstName:null,
-            lastName:null,
-            email:null,
-            password:null,
-            phone:null
+            reg:{
+                firstName:null,
+                lastName:null,
+                email:null,
+                password:null,
+                phone:null
+            }
         }
     },
     methods:{
         register(e){
-            if(this.email && this.password && this.firstName){
-                console.warn(this.email)
+            if(this.reg.email && this.reg.password && this.reg.firstName) {
+                this.axios.post('http://localhost:3306/api/v1/user',this.reg)
+                .then((result)=>{
+                        console(result, "result")
+                })
             }
-            if(!this.firstName){
+            if(!this.reg.firstName){
                 this.error.push("First Name is Requried Filed")
             }
-            if(!this.email) {
+            if(!this.reg.email) {
                 this.error.push("Email is Requried Filed")
             }
-            if(!this.password){
+            if(!this.reg.password){
                 this.error.push("Email is Requried Filed")
             }
             console.log("Register Form",this.error)
