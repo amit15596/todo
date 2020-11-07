@@ -8,6 +8,9 @@
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn text>
+          <li>
+            <router-link></router-link>
+          </li>
           Home
         </v-btn>
 
